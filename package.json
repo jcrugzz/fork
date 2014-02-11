@@ -1,0 +1,23 @@
+{
+  "name": "fork",
+  "description": "Handle request response interaction with a child process",
+  "version": "0.1.0",
+  "author": "Jarrett Cruger <jcrugzz@gmail.com>",
+  "repository": {
+    "url": "git://github.com/jcrugzz/fork.git"
+  },
+  "main": "fork.js",
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "dependencies": {
+    "back": "~0.1.5"
+  },
+  "devDependencies": {
+    "tape": "~2.3.2"
+  },
+  "license": "MIT"
+}
