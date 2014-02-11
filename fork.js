@@ -78,6 +78,12 @@ Fork.prototype.onMessage = function (message) {
     : this._callback(null, message);
 };
 
+Fork.prototype.onExit = function (code, signal) {
+  if (!this.returned) {
+    code = code || signal;
+    return this.onError(new Error('Child process exited with code ' + code));
+  }
+};
 //
 // We always cleanup and retry if configured to do so
 //
@@ -85,42 +91,34 @@ Fork.prototype.onError = function (err) {
   this.cleanup();
   return this._retry
     ? this.retry(err)
-    : this.emitError(err);
+    : this.dispatchError(err);
 };
 
 Fork.prototype.retry = function (err) {
   return back(function (fail) {
     if (fail) {
-      return this.emitError(err);
+      return this.dispatchError(err);
     }
     this.emit('retry', this.attempt);
     this.fork();
   }.bind(this), this.attempt);
 }
 
-Fork.prototype.emitError = function (err) {
+Fork.prototype.dispatchError = function (err) {
   return !this._callback
     ? this.emit('error', err)
     : this._callback(err)
 }
 
 //
-// We should be durable here and ensure the process gets killed
+// TODO: We should be durable here and ensure the process gets killed
 //
 Fork.prototype.cleanup = function () {
-  //
-  // Change reference
-  //
-  var proc = this.process;
-  this.process = null;
-  this.prevProcesses[];
-  proc.disconnect();
+  this.process.disconnect();
+  this.returned = false;
   //
   // Hmm should we just kill the process instead?
   //
-  setTimeout(function () {
 
-  })
 };
 
-Fork.prototype.
