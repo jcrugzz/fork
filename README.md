@@ -29,10 +29,10 @@ var fork = new Fork({
   path: childToFork,
   retries: 3,
   backoff: true})
+  .fork(message)
   .on('error', function(err) { console.error(err) })
   .on('retry', function () { console.log('retrying')})
-  .on('response', function (message) { console.dir(message) })
-  .fork(message);
+  .on('response', function (message) { console.dir(message) });
 
 //
 // You can also use a simple callback api on the `start`/`fork` method!
