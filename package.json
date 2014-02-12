@@ -17,7 +17,8 @@
     "back": "~0.1.5"
   },
   "devDependencies": {
-    "tape": "~2.3.2"
+    "tape": "~2.3.2",
+    "forkee": "0.0.1"
   },
   "license": "MIT"
 }
