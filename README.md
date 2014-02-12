@@ -6,6 +6,7 @@ status](https://secure.travis-ci.org/jcrugzz/fork.png)](http://travis-ci.org/jcr
 A simple module that gives a clean `request`/`response` api for dealing with
 a [`child_process`][child_process] that you want to [`fork`][fork]. It comes with built
 in retry support using [`back`][back] for backoff to try and ensure determinism.
+Works best when used with [`forkee`][forkee] for the child process.
 
 ## Example Usage
 
@@ -45,3 +46,4 @@ var fork2 = new Fork(childToFork).start(message,
 [child_process]: http://nodejs.org/api/child_process.html
 [fork]: http://nodejs.org/api/child_process.html#child_process_child_process_fork_modulepath_args_options
 [back]: https://github.com/jcrugzz/back
+[forkee]: https://github.com/jcrugzz/forkee
