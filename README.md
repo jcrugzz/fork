@@ -1,5 +1,8 @@
 # fork
 
+[![build
+status](https://secure.travis-ci.org/jcrugzz/fork.png)](http://travis-ci.org/jcrugzz/fork)
+
 A simple module that gives a clean `request`/`response` api for dealing with
 a [`child_process`][child_process] that you want to [`fork`][fork]. It comes with built
 in retry support using [`back`][back] for backoff to try and ensure determinism.
