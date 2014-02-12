@@ -8,6 +8,10 @@ a [`child_process`][child_process] that you want to [`fork`][fork]. It comes wit
 in retry support using [`back`][back] for backoff to try and ensure determinism.
 Works best when used with [`forkee`][forkee] for the child process.
 
+## install
+
+`npm install fork --save`
+
 ## Example Usage
 
 ```js
