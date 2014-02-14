@@ -4,7 +4,7 @@ var path = require('path');
 var fork = require('../fork');
 var child = path.join(__dirname, 'fixtures', 'retry.js');
 
-test('test request response when using retry functionality and failing child process', function (t) {
+test('test request response when using 2 retries functionality and failing child process', function (t) {
   t.plan(3);
 
   var message = { action: 'woooo', doc: 'document' };
