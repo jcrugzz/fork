@@ -106,9 +106,21 @@ Fork.prototype.retry = function (err) {
 }
 
 Fork.prototype.dispatchError = function (err) {
+  err = this._createError(err);
   return !this._callback
     ? this.emit('error', err)
     : this._callback(err)
+};
+
+//
+// Remark: Reform an error object since JSON.parse is not smart enough to serialize
+// errors
+//
+Fork.prototype._createError = function (obj) {
+  obj = obj || {};
+  var error = new Error(obj.message || 'Received empty error from child process');
+  error.stack = obj.stack;
+  return error;
 }
 
 //
