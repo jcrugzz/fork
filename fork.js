@@ -70,10 +70,10 @@ Fork.prototype.fork = function (message, callback) {
 
 Fork.prototype.onMessage = function (message) {
   this.returned = true;
-  this.cleanup();
   if (message.error) {
     return this.onError(message.error);
   }
+  this.cleanup();
   return !this._callback
     ? this.emit('response', message)
     : this._callback(null, message);
@@ -116,6 +116,7 @@ Fork.prototype.dispatchError = function (err) {
 //
 Fork.prototype.cleanup = function () {
   this.process.disconnect();
+  this.process.removeAllListeners();
   this.process = null;
   //
   // Hmm should we just kill the process instead?
