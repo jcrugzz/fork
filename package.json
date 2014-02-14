@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "tape": "~2.3.2",
-    "forkee": "0.0.1"
+    "forkee": "~0.1.1"
   },
   "license": "MIT"
 }
