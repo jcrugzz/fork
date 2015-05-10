@@ -1,6 +1,7 @@
 
 var EE = require('events').EventEmitter;
 var util = require('util');
+var errs = require('errs');
 var cp = require('child_process');
 var back = require('back');
 
@@ -28,7 +29,6 @@ function Fork(options) {
   }
   this.retries = options.retries || 0;
   this.backoff = options.backoff || false;
-  this.killTimer = options.killTimer || 100;
   //
   // Use a boolean and hack the setTimeout delay in order to make
   // the backoff optional
@@ -69,10 +69,22 @@ Fork.prototype.fork = function (message, callback) {
 };
 
 Fork.prototype.onMessage = function (message) {
+  var event;
+  //
+  // If we receive a special event here we emit it on our instance
+  // so we can do logging and things of that nature
+  //
+  if (message.__event) {
+    event = message.__event;
+    delete message.__event;
+    return this.emit(event, message);
+  }
+
   this.returned = true;
   if (message.error) {
     return this.onError(message.error);
   }
+
   this.cleanup();
   return !this._callback
     ? this.emit('response', message)
@@ -116,18 +128,15 @@ Fork.prototype.dispatchError = function (err) {
 // Remark: Reform an error object since JSON.parse is not smart enough to serialize
 // errors
 //
-Fork.prototype._createError = function (obj) {
-  obj = obj || {};
-  var error = new Error(obj.message || 'Received empty error from child process');
-  error.stack = obj.stack;
-  return error;
+Fork.prototype._createError = function (err) {
+  return errs.create(err);
 }
 
 //
 // TODO: We should be durable here and ensure the process gets killed
 //
 Fork.prototype.cleanup = function () {
-  this.process.disconnect();
+  if (this.process.connected) this.process.disconnect();
   this.process.removeAllListeners();
   this.process = null;
   //
