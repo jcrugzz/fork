@@ -35,6 +35,15 @@ var fork = new Fork({
   .on('response', function (message) { console.dir(message) });
 
 //
+// If the `forkee` child process sends an event, it gets emit on the `fork` instance.
+// If the forkee instance sent a `website:fetched` message
+//
+fork.on('website:fetched', function (message) {
+  // Do something with `message` object like log it or dispatch to an external
+  // service
+});
+
+//
 // You can also use a simple callback api on the `start`/`fork` method!
 //
 var fork2 = new Fork(childToFork).start(message,
