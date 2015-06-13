@@ -1,7 +1,7 @@
 {
   "name": "fork",
   "description": "Handle request response interaction with a child process",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Jarrett Cruger <jcrugzz@gmail.com>",
   "repository": {
     "url": "git://github.com/jcrugzz/fork.git"
