@@ -30,6 +30,7 @@ function Fork(options) {
   this.retries = options.retries || 0;
   this.backoff = options.backoff || false;
   this.args = options.args || [];
+  this.env = options.env;
   //
   // Use a boolean and hack the setTimeout delay in order to make
   // the backoff optional
@@ -57,7 +58,9 @@ Fork.prototype.fork = function (message, callback) {
   //
   // Fork Process
   //
-  this.process = cp.fork(this.path, this.args);
+  this.process = cp.fork(this.path, this.args, {
+    env: this.env
+  });
   //
   // Setup the listeners
   //
