@@ -32,6 +32,11 @@ function Fork(options) {
   this.args = options.args || [];
   this.env = options.env;
   //
+  // Be equivalent to defaults since we are defining them
+  //
+  this.execPath = options.execPath || process.execPath;
+  this.execArgv = options.execArgv || process.execArgv;
+  //
   // Use a boolean and hack the setTimeout delay in order to make
   // the backoff optional
   //
@@ -59,7 +64,9 @@ Fork.prototype.fork = function (message, callback) {
   // Fork Process
   //
   this.process = cp.fork(this.path, this.args, {
-    env: this.env
+    env: this.env,
+    execPath: this.execPath,
+    execArgv: this.execArgv
   });
   //
   // Setup the listeners
