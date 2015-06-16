@@ -2,6 +2,7 @@
 var EE = require('events').EventEmitter;
 var util = require('util');
 var errs = require('errs');
+var killer = require('killer');
 var cp = require('child_process');
 var back = require('back');
 
@@ -147,8 +148,17 @@ Fork.prototype._createError = function (err) {
 // TODO: We should be durable here and ensure the process gets killed
 //
 Fork.prototype.cleanup = function () {
+  var self = this;
   if (this.process.connected) this.process.disconnect();
   this.process.removeAllListeners();
+  var pid = this.process.pid;
+  //
+  // On the next tick try and kill it, this should let disconnect work if it was
+  // ever going to
+  //
+  setImmediate(function () {
+    killer(pid, self.emit.bind(self, 'killed'));
+  })
   this.process = null;
   //
   // Hmm should we just kill the process instead?
