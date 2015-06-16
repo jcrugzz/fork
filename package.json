@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "back": "~0.1.5",
-    "errs": "^0.3.2"
+    "errs": "^0.3.2",
+    "killer": "^0.1.0"
   },
   "devDependencies": {
     "faucet": "0.0.1",
